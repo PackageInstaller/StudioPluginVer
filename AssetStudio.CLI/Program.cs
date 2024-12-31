@@ -185,7 +185,8 @@ namespace AssetStudio.CLI
                     var toReadFile = ImportHelper.ProcessingSplitFiles(files.ToList());
 
                     var fileList = new List<string>(toReadFile);
-                    foreach (var file in fileList)
+                    assetsManager.autoDetectMultipleBundle = o.AutoDetectMultipleBundle;
+					foreach (var file in fileList)
                     {
                         assetsManager.LoadFiles(file);
                         if (assetsManager.assetsFileList.Count > 0)
