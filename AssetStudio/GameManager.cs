@@ -52,6 +52,7 @@ namespace AssetStudio
             Games.Add(index++, new Game(GameType.PerpetualNovelty));
             Games.Add(index++, new Game(GameType.GuiLongChao));
             Games.Add(index++, new Game(GameType.CounterSide));
+            Games.Add(index++, new Game(GameType.XinYueTongXing));
         }
         public static Game GetGame(GameType gameType) => GetGame((int)gameType);
         public static Game GetGame(int index)
@@ -175,6 +176,7 @@ namespace AssetStudio
         PerpetualNovelty,
         GuiLongChao,
         CounterSide,
+        XinYueTongXing,
     }
 
     public static class GameTypes
@@ -203,6 +205,7 @@ namespace AssetStudio
         public static bool IsPerpetualNovelty(this GameType type) => type == GameType.PerpetualNovelty;
         public static bool IsGuiLongChao(this GameType type) => type == GameType.GuiLongChao;
         public static bool IsCounterSide(this GameType type) => type == GameType.CounterSide;
+        public static bool IsXinYueTongXing(this GameType type) => type == GameType.XinYueTongXing;
         public static bool IsGIGroup(this GameType type) => type switch
         {
             GameType.GI or GameType.GI_Pack or GameType.GI_CB1 or GameType.GI_CB2 or GameType.GI_CB3 or GameType.GI_CB3Pre => true,

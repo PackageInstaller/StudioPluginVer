@@ -1200,5 +1200,62 @@ namespace AssetStudio
             ms.Position = 0;
             return new FileReader(reader.FullPath, ms);
         }
+        
+        public static FileReader DecryptXinYueTongXing(FileReader reader)
+        {
+            Logger.Verbose($"Attempting to decrypt file {reader.FileName} with XinYueTongXing encryption");
+
+            var data = reader.ReadBytes((int)reader.Remaining);
+
+            byte[] salt = Encoding.UTF8.GetBytes(reader.FileName.Replace(".ab", ""));
+
+            using (SHA1 sha1 = SHA1.Create())
+            {
+                byte[] hashval = sha1.ComputeHash(Encoding.UTF8.GetBytes("System.Byte[]").Concat(salt).ToArray());
+                for (int i = 0; i < 100 - 1; i++)
+                {
+                    hashval = sha1.ComputeHash(hashval);
+                }
+                byte[] hashder = sha1.ComputeHash(hashval);
+                int index = 1;
+                while (hashder.Length < 32)
+                {
+                    hashder = hashder.Concat(sha1.ComputeHash(new byte[] { (byte)(index + 48) }.Concat(hashval).ToArray())).ToArray();
+                    index++;
+                }
+                byte[] key = hashder.Take(32).ToArray();
+
+                using (Aes aes = Aes.Create())
+                {
+                    aes.Key = key;
+                    aes.Mode = CipherMode.ECB; // AES CTR模式在.NET中没有直接支持，需要手动实现
+                    aes.Padding = PaddingMode.None;
+
+                    byte[] counter = new byte[16];
+                    Array.Copy(salt, 0, counter, 0, Math.Min(salt.Length, 16));
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                        {
+                            cs.Write(counter, 0, counter.Length);
+                            cs.FlushFinalBlock();
+                        }
+                        byte[] encryptedCounter = ms.ToArray();
+                        byte[] decryptedData = new byte[data.Length];
+
+                        for (int i = 0; i < data.Length; i++)
+                        {
+                            decryptedData[i] = (byte)(data[i] ^ encryptedCounter[i % 16]);
+                        }
+
+                        MemoryStream resultStream = new MemoryStream();
+                        resultStream.Write(decryptedData, 0, decryptedData.Length);
+                        resultStream.Position = 0;
+                        return new FileReader(reader.FullPath, resultStream);
+                    }
+                }
+            }
+        }
     }
 }
