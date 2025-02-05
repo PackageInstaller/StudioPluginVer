@@ -1,3 +1,6 @@
+[<img src="https://api.gitsponsors.com/api/badge/img?id=759364618" height="20">](https://api.gitsponsors.com/api/badge/link?p=iQu49g1SSosgAGIECJ1g4EJ7TtB0VX0Xbm2H/qKEljL9qZFyOJh+3hFAVhu7GzctRJbY9C/q2zv/LhWkjGbh34Gg6BKvJdCv+cUfVvWWwXwh8p3l3yHltaaVoMrrPSfAD2TJEr/Uz1wNKVupGnLXVg==)
+
+
 # Studio
 Check out the [original AssetStudio project](https://github.com/Perfare/AssetStudio) for more information.
 
