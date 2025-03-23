@@ -56,7 +56,9 @@ namespace AssetStudio
 			Games.Add(index++, new Game(GameType.LeapOverTheRainbow));
 			Games.Add(index++, new Game(GameType.GuiLongChao));
 			Games.Add(index++, new Game(GameType.AliceFiction));
-		}
+            Games.Add(index++, new Game(GameType.CounterSide));
+            Games.Add(index++, new Game(GameType.XinYueTongXing));
+        }
         public static Game GetGame(GameType gameType) => GetGame((int)gameType);
         public static Game GetGame(int index)
         {
@@ -183,7 +185,9 @@ namespace AssetStudio
 		GuiLongChao,
         MustUnityCN,
 		AliceFiction,
-	}
+        CounterSide,
+        XinYueTongXing,
+    }
 
     public static class GameTypes
     {
@@ -214,7 +218,9 @@ namespace AssetStudio
 		public static bool IsLeapOverTheRainbow(this GameType type) => type == GameType.LeapOverTheRainbow;
 		public static bool IsGuiLongChao(this GameType type) => type == GameType.GuiLongChao;
 		public static bool IsMustUnityCN(this GameType type) => type == GameType.MustUnityCN;
-		public static bool IsGIGroup(this GameType type) => type switch
+        public static bool IsCounterSide(this GameType type) => type == GameType.CounterSide;
+        public static bool IsXinYueTongXing(this GameType type) => type == GameType.XinYueTongXing;
+        public static bool IsGIGroup(this GameType type) => type switch
         {
             GameType.GI or GameType.GI_Pack or GameType.GI_CB1 or GameType.GI_CB2 or GameType.GI_CB3 or GameType.GI_CB3Pre => true,
             _ => false,

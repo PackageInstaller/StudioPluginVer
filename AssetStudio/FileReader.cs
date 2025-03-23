@@ -238,7 +238,16 @@ namespace AssetStudio
 					case GameType.PathToNowhere:
 						reader = DecryptPathToNowhere(reader);
 						break;
-				}
+                    case GameType.CounterSide:
+                        reader = DecryptCounterSide(reader);
+                        break;
+                    case GameType.PerpetualNovelty:
+                        reader = DecryptPerpetualNovelty(reader);
+                        break;
+                    case GameType.XinYueTongXing:
+                        reader = DecryptXinYueTongXing(reader);
+                        break;
+                }
             }
             if (autoDetectMultipleBundle || reader.FileType == FileType.BundleFile && game.Type.IsBlockFile() || reader.FileType == FileType.ENCRFile || reader.FileType == FileType.BlbFile)
             {
