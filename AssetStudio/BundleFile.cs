@@ -141,7 +141,7 @@ namespace AssetStudio
                 case "UnityFS":
                 case "ENCR":
                     ReadHeader(reader);
-                    if (game.Type.IsUnityCN())
+                    if (game.Type.IsUnityCN() || game.Type.IsMustUnityCN())
                     {
                         ReadUnityCN(reader);
                     }
@@ -403,7 +403,7 @@ namespace AssetStudio
 
             Logger.Verbose($"Mask set to {mask}");
 
-            if ((m_Header.flags & mask) != 0)
+            if ((m_Header.flags & mask) != 0 || Game.Type.IsMustUnityCN())
             {
                 Logger.Verbose($"Encryption flag exist, file is encrypted, attempting to decrypt");
                 UnityCN = new UnityCN(reader);
@@ -449,7 +449,7 @@ namespace AssetStudio
             {
                 reader.AlignStream(16);
             }
-            else if (version[0] == 2019 && version[1] == 4)
+            else if ((version[0] > 2019 || (version[0] == 2019 && version[1] >= 4)) && m_Header.flags != ArchiveFlags.BlocksAndDirectoryInfoCombined)
             {
                 var p = reader.Position;
                 var len = 16 - p % 16;
@@ -628,7 +628,7 @@ namespace AssetStudio
                                     Logger.Verbose($"Block encrypted with mr0k, decrypting...");
                                     compressedBytesSpan = Mr0kUtils.Decrypt(compressedBytesSpan, (Mr0k)Game);
                                 }
-                                if (Game.Type.IsUnityCN() && ((int)blockInfo.flags & 0x100) != 0)
+                                if ((Game.Type.IsUnityCN() && ((int)blockInfo.flags & 0x100) != 0) || Game.Type.IsMustUnityCN())
                                 {
                                     Logger.Verbose($"Decrypting block with UnityCN...");
                                     UnityCN.DecryptBlock(compressedBytes, compressedSize, i);

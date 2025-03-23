@@ -14,7 +14,8 @@ namespace AssetStudio
             Games.Add(index++, new(GameType.Normal));
             Games.Add(index++, new Game(GameType.FakeHeader));
             Games.Add(index++, new(GameType.UnityCN));
-            Games.Add(index++, new Mhy(GameType.GI, GIMhyShiftRow, GIMhyKey, GIMhyMul, GIExpansionKey, GISBox, GIInitVector, GIInitSeed));
+			Games.Add(index++, new Game(GameType.MustUnityCN));
+			Games.Add(index++, new Mhy(GameType.GI, GIMhyShiftRow, GIMhyKey, GIMhyMul, GIExpansionKey, GISBox, GIInitVector, GIInitSeed));
             Games.Add(index++, new Mr0k(GameType.GI_Pack, PackExpansionKey, blockKey: PackBlockKey));
             Games.Add(index++, new Mr0k(GameType.GI_CB1));
             Games.Add(index++, new Blk(GameType.GI_CB2, GI_CBXExpansionKey, initVector: GI_CBXInitVector, initSeed: GI_CBXInitSeed));
@@ -180,6 +181,7 @@ namespace AssetStudio
 		PathToNowhere,
 		LeapOverTheRainbow,
 		GuiLongChao,
+        MustUnityCN,
 		AliceFiction,
 	}
 
@@ -211,6 +213,7 @@ namespace AssetStudio
 		public static bool IsPathToNowhere(this GameType type) => type == GameType.PathToNowhere;
 		public static bool IsLeapOverTheRainbow(this GameType type) => type == GameType.LeapOverTheRainbow;
 		public static bool IsGuiLongChao(this GameType type) => type == GameType.GuiLongChao;
+		public static bool IsMustUnityCN(this GameType type) => type == GameType.MustUnityCN;
 		public static bool IsGIGroup(this GameType type) => type switch
         {
             GameType.GI or GameType.GI_Pack or GameType.GI_CB1 or GameType.GI_CB2 or GameType.GI_CB3 or GameType.GI_CB3Pre => true,

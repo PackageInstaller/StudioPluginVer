@@ -26,7 +26,7 @@ namespace AssetStudio.CLI
                     return;
                 }
 
-                if (game.Type.IsUnityCN())
+                if (game.Type.IsUnityCN() || game.Type.IsMustUnityCN())
                 {
                     if (!UnityCNManager.TryGetEntry(o.KeyIndex, out var unityCN))
                     {
@@ -186,7 +186,7 @@ namespace AssetStudio.CLI
 
                     var fileList = new List<string>(toReadFile);
                     assetsManager.autoDetectMultipleBundle = o.AutoDetectMultipleBundle;
-					foreach (var file in fileList)
+                    foreach (var file in fileList)
                     {
                         assetsManager.LoadFiles(file);
                         if (assetsManager.assetsFileList.Count > 0)

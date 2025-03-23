@@ -170,7 +170,7 @@ namespace AssetStudio.GUI
             TypeFlags.SetTypes(JsonConvert.DeserializeObject<Dictionary<ClassIDType, (bool, bool)>>(Properties.Settings.Default.types));
             Logger.Info($"Target Game type is {Studio.Game.Type}");
 
-            if (Studio.Game.Type.IsUnityCN())
+            if (Studio.Game.Type.IsUnityCN() || Studio.Game.Type.IsMustUnityCN())
             {
                 UnityCNManager.SetKey(Properties.Settings.Default.selectedUnityCNKey);
             }
@@ -308,7 +308,7 @@ namespace AssetStudio.GUI
                 {
                     productName = Studio.Game.Name;
                 }
-                else if (Studio.Game.Type.IsUnityCN() && UnityCNManager.TryGetEntry(Properties.Settings.Default.selectedUnityCNKey, out var unityCN))
+                else if ((Studio.Game.Type.IsUnityCN() || Studio.Game.Type.IsMustUnityCN()) && UnityCNManager.TryGetEntry(Properties.Settings.Default.selectedUnityCNKey, out var unityCN))
                 {
                     productName = unityCN.Name;
                 }
@@ -2208,7 +2208,7 @@ namespace AssetStudio.GUI
             Studio.Game = GameManager.GetGame(Properties.Settings.Default.selectedGame);
             Logger.Info($"Target Game is {Studio.Game.Name}");
 
-            if (Studio.Game.Type.IsUnityCN())
+            if (Studio.Game.Type.IsUnityCN() || Studio.Game.Type.IsMustUnityCN())
             {
                 UnityCNManager.SetKey(Properties.Settings.Default.selectedUnityCNKey);
             }
